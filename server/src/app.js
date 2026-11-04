@@ -9,6 +9,10 @@ import { safetyRouter } from './routes/safety.js';
 
 export function createApp(store) {
   const app = express();
+    app.use((req, _res, next) => {
+    req.url = req.url.replace(/^\/api(?=\/|\?|$)/, '') || '/';
+    next();
+  });
 
   const allowedOrigins = (
     process.env.CLIENT_ORIGIN ??
@@ -44,3 +48,4 @@ export function createApp(store) {
 
   return app;
 }
+
